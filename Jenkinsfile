@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    GOOGLE_APPLICATION_CREDENTIALS = "${WORKSPACE}/.gcp/credentials.json"
+    GOOGLE_APPLICATION_CREDENTIALS = "${WORKSPACE}/terraform-test1/test1.json"
   }
 
   stages {
