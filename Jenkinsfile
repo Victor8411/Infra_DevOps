@@ -1,35 +1,32 @@
 pipeline {
-    agent any
+  agent any
 
-    environment {
-        ANSIBLE_HOST_KEY_CHECKING = 'False'
+  environment {
+    GOOGLE_APPLICATION_CREDENTIALS = "${WORKSPACE}/.gcp/credentials.json"
+  }
+
+  stages {
+    stage('Terraform Init & Apply') {
+      steps {
+        echo '📦 Initialisation de Terraform'
+        sh 'terraform init'
+
+        echo '🚀 Application de l’infrastructure'
+        sh 'terraform apply -auto-approve'
+      }
     }
 
-    stages {
-        stage('Terraform Init & Apply') {
-            steps {
-                echo '📦 Initialisation de Terraform'
-                sh 'terraform init'
-
-                echo '🚀 Application de l’infrastructure'
-                sh 'terraform apply -auto-approve'
-            }
-        }
-
-        stage('Ansible Playbook') {
-            steps {
-                echo '🛠️ Lancement d\'Ansible'
-                sh 'ansible-playbook -i hosts.ini site.yml'
-            }
-        }
+    stage('Ansible Playbook') {
+      steps {
+        echo '📡 Provision avec Ansible'
+        sh 'ansible-playbook site.yml'
+      }
     }
+  }
 
-    post {
-        success {
-            echo '✅ Déploiement complet avec succès !'
-        }
-        failure {
-            echo '❌ Échec du pipeline.'
-        }
+  post {
+    failure {
+      echo '❌ Échec du pipeline.'
     }
+  }
 }
