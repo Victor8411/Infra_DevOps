@@ -27,6 +27,11 @@ resource "google_compute_instance" "vms" {
     access_config {}
   }
 
+  # Ajout de la clé publique utilisée par Jenkins
+  metadata = {
+    ssh-keys = "admin:${file("${path.module}/jenkins_ansible_key.pub")}"
+  }
+
   metadata_startup_script = <<-EOT
     sudo apt update
     sudo apt install -y python3 python3-pip
@@ -43,6 +48,3 @@ output "vm_ips" {
     name => google_compute_instance.vms[i].network_interface[0].access_config[0].nat_ip
   }
 }
-
-
-
