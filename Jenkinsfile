@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        GOOGLE_APPLICATION_CREDENTIALS = 'test1.json'
+        GOOGLE_APPLICATION_CREDENTIALS = "${env.WORKSPACE}/test1.json"
     }
 
     stages {
