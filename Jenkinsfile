@@ -15,6 +15,13 @@ pipeline {
             }
         }
 
+        stage('Génération hosts.ini') {
+            steps {
+                echo '📄 Génération dynamique de hosts.ini'
+                sh './generate-hosts.sh'
+            }
+        }
+
         stage('Ansible Playbook') {
             steps {
                 echo '🔧 Lancement du playbook Ansible'
