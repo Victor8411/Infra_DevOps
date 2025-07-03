@@ -1,5 +1,4 @@
-Infrastructure DevOps - Terraform + Ansible + Jenkins
-
+# Infrastructure DevOps - Terraform + Ansible + Jenkins
 
 Ce projet est une démonstration complète d'une infrastructure DevOps automatisée. Il permet de créer des machines virtuelles sur Google Cloud Platform (GCP) avec Terraform, de les configurer avec Ansible, et de piloter l'ensemble via un pipeline Jenkins.
 Objectifs
@@ -22,14 +21,16 @@ Arborescence principale
 └── terraform.tfstate (ignoré)
 
 
-Prérequis
+## Prérequis
+
 Un projet GCP configuré (avec API Compute Engine activée)
 Un fichier JSON de clé de compte de service (non versionné)
 Jenkins installé avec les plugins Git, Terraform, Ansible
 Une machine Jenkins avec la clé SSH correspondante aux métadonnées GCP
 
 
-Déploiement avec Jenkins
+## Déploiement avec Jenkins
+
 Jenkins déclenche le pipeline depuis GitHub
 Le stage Terraform initialise et applique l'infrastructure sur GCP
 Le stage Ansible exécute un playbook sur les VMs provisionnées
@@ -44,7 +45,9 @@ Sécurité
 Les fichiers sensibles (.json, .tfstate, etc.) sont ignorés via .gitignore
 Le fichier JSON GCP ne doit jamais être versionné
 Possibilité d'utiliser Vault ou Google Secret Manager à l'avenir
-TODO futur
+
+## TODO futur
+
 Ajouter des tests de déploiement (Ansible lint, Terraform validate)
 Stocker les tfstate sur un bucket distant (backend)
 Intégrer Vault pour gérer les secrets
