@@ -1,7 +1,7 @@
 terraform {
   backend "gcs" {
-    bucket = "terraform-victor-state"     # ✅ Ton nouveau bucket
-    prefix = "terraform/state"            # 📁 Chemin dans le bucket (tu peux changer si besoin)
+    bucket = "terraform-victor-state"   # Remplace par ton vrai nom de bucket
+    prefix = "terraform/state"
   }
 }
 
@@ -15,14 +15,12 @@ variable "vm_names" {
   default = ["front", "back", "db"]
 }
 
-#  Réservation des IPs statiques
 resource "google_compute_address" "static_ips" {
   count  = length(var.vm_names)
   name   = "ip-${var.vm_names[count.index]}"
   region = "europe-west1"
 }
 
-# 💻 Création des VMs
 resource "google_compute_instance" "vms" {
   count        = length(var.vm_names)
   name         = "vm-${var.vm_names[count.index]}"
@@ -40,7 +38,6 @@ resource "google_compute_instance" "vms" {
   network_interface {
     network = "default"
     access_config {
-      #  Attachement de l’IP statique réservée
       nat_ip = google_compute_address.static_ips[count.index].address
     }
   }
@@ -60,7 +57,6 @@ resource "google_compute_instance" "vms" {
   }
 }
 
-# 📤 Export des IPs
 output "vm_ips" {
   value = {
     for i, name in var.vm_names :
