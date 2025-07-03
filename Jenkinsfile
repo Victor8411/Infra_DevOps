@@ -9,7 +9,7 @@ pipeline {
         stage('Terraform Init & Apply') {
             steps {
                 echo '📦 Initialisation de Terraform'
-                sh 'terraform init -input=false -reconfigure'
+                sh 'terraform init'
                 echo '🚀 Application de l’infrastructure'
                 sh 'terraform apply -auto-approve'
             }
