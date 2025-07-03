@@ -1,7 +1,7 @@
 terraform {
   backend "gcs" {
-    bucket = "terraform-alice-state"     # 🔁 remplace par ton vrai nom de bucket si différent
-    prefix = "terraform/state"           # 📁 chemin dans le bucket
+    bucket = "terraform-victor-state"     # ✅ Ton nouveau bucket
+    prefix = "terraform/state"            # 📁 Chemin dans le bucket (tu peux changer si besoin)
   }
 }
 
