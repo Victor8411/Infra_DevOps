@@ -7,4 +7,3 @@
 # Fichiers sensibles
 *.json
 jenkins_ansible_key
-jenkins_ansible_key.pub
