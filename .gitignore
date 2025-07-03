@@ -7,3 +7,6 @@
 # Fichiers sensibles
 *.json
 jenkins_ansible_key
+terraform.tfstate
+terraform.tfstate.backup
+.terraform/
