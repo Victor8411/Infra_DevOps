@@ -8,6 +8,14 @@ variable "vm_names" {
   default = ["front", "back", "db"]
 }
 
+#  Réservation des IPs statiques
+resource "google_compute_address" "static_ips" {
+  count  = length(var.vm_names)
+  name   = "ip-${var.vm_names[count.index]}"
+  region = "europe-west1"
+}
+
+# 💻 Création des VMs
 resource "google_compute_instance" "vms" {
   count        = length(var.vm_names)
   name         = "vm-${var.vm_names[count.index]}"
@@ -24,15 +32,16 @@ resource "google_compute_instance" "vms" {
 
   network_interface {
     network = "default"
-    access_config {}
+    access_config {
+      #  Attachement de l’IP statique réservée
+      nat_ip = google_compute_address.static_ips[count.index].address
+    }
   }
 
-  # Clé publique SSH Jenkins ajoutée pour accès Ansible
   metadata = {
     ssh-keys = "jenkins:${file("${path.module}/jenkins_ansible_key.pub")}"
   }
 
-  # Script de démarrage minimal pour installer Python (nécessaire à Ansible)
   metadata_startup_script = <<-EOT
     #!/bin/bash
     apt-get update
@@ -44,6 +53,7 @@ resource "google_compute_instance" "vms" {
   }
 }
 
+# 📤 Export des IPs
 output "vm_ips" {
   value = {
     for i, name in var.vm_names :
