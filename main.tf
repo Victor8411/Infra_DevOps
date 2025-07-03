@@ -27,14 +27,16 @@ resource "google_compute_instance" "vms" {
     access_config {}
   }
 
-  # Ajout de la clé publique utilisée par Jenkins
+  # Clé publique SSH Jenkins ajoutée pour accès Ansible
   metadata = {
-    ssh-keys = "admin:${file("${path.module}/jenkins_ansible_key.pub")}"
+    ssh-keys = "jenkins:${file("${path.module}/jenkins_ansible_key.pub")}"
   }
 
+  # Script de démarrage minimal pour installer Python (nécessaire à Ansible)
   metadata_startup_script = <<-EOT
-    sudo apt update
-    sudo apt install -y python3 python3-pip
+    #!/bin/bash
+    apt-get update
+    apt-get install -y python3 python3-pip
   EOT
 
   labels = {
