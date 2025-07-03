@@ -6,19 +6,6 @@ Création de VMs front, back et db sur GCP
 Automatisation du provisionnement avec Terraform
 Configuration des VMs avec Ansible
 Intégration CI/CD avec Jenkins (multi-branches)
-Arborescence principale
-.
-├── .gitignore
-├── Jenkinsfile
-├── ansible.cfg
-├── hosts.ini
-├── main.tf
-├── roles
-│   ├── front/
-│   ├── back/
-│   └── db/
-├── site.yml
-└── terraform.tfstate (ignoré)
 
 
 ## Prérequis
