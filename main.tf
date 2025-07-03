@@ -1,3 +1,10 @@
+terraform {
+  backend "gcs" {
+    bucket = "terraform-alice-state"     # 🔁 remplace par ton vrai nom de bucket si différent
+    prefix = "terraform/state"           # 📁 chemin dans le bucket
+  }
+}
+
 provider "google" {
   project = "handy-woodland-464607-p1"
   region  = "europe-west1"
