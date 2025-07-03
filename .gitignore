@@ -1,3 +1,26 @@
+# === Terraform ===
+*.tfstate
+*.tfstate.*
 .terraform/
-terraform-test1/nom-du-fichier.json
-test1.json
+.terraform.lock.hcl
+
+# === Fichiers de secrets ===
+*.json
+*.pem
+*.key
+
+# === Ansible ===
+*.retry
+*.log
+
+# === Fichiers de configuration Jenkins sensibles (si jamais ajoutés) ===
+secrets/          
+vault/            
+
+# === Fichiers système ou IDE ===
+.DS_Store
+*.swp
+*.swo
+*.bak
+.idea/
+.vscode/
