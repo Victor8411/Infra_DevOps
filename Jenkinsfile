@@ -9,7 +9,8 @@ pipeline {
         stage('Terraform Init & Apply') {
             steps {
                 echo '📦 Initialisation de Terraform'
-                sh 'terraform init'
+                sh 'rm -rf .terraform'
+                sh 'echo yes | terraform init'
                 echo '🚀 Application de l’infrastructure'
                 sh 'terraform apply -auto-approve'
             }
