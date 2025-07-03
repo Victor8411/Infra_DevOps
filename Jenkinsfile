@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         GOOGLE_APPLICATION_CREDENTIALS = "${env.WORKSPACE}/test1.json"
-        ANSIBLE_HOST_KEY_CHECKING = "False"
     }
 
     stages {
@@ -28,9 +27,9 @@ pipeline {
             steps {
                 echo '🧼 Nettoyage des anciennes empreintes SSH'
                 sh '''
-                    KNOWN_HOSTS="/var/lib/jenkins/.ssh/known_hosts"
-                    for ip in $(awk '/ansible_host/ {print $2}' hosts.ini | cut -d= -f2); do
-                        ssh-keygen -f "$KNOWN_HOSTS" -R "$ip" || true
+                    grep -Eo '[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+' hosts.ini | while read ip; do
+                        echo "🧼 Suppression de l'empreinte SSH pour $ip"
+                        ssh-keygen -R "$ip" -f /var/lib/jenkins/.ssh/known_hosts || true
                     done
                 '''
             }
